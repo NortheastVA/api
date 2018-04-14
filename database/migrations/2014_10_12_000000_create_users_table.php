@@ -17,6 +17,10 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('pilotnumber');
+            $table->string('title');
+            $table->string('location');
+            $table->string('base');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

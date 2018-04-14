@@ -26,4 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @param bool $zeropad
+     * @return string
+     */
+    public function pilotID($zeropad = false) {
+        if ($zeropad)
+            return sprintf("%s%04d", env('AIRLINE_CODE', 'ZZZ'), $this->pilotnumber);
+        else
+            return sprintf("%s%d", env('AIRLINE_CODE', 'ZZZ'), $this->pilotnumber);
+    }
 }
