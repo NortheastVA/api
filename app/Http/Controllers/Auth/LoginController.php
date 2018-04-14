@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -35,5 +36,19 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function authenticate(Request $request) {
+        $cred = $request->only("username","password");
+        if (\Auth::attempt(['email' => $cred['username'], 'password' => $cred['password']])) {
+            return 'OK';
+        } elseif (\Auth::attempt(['pilotID' => $cred['username'], 'password' => $cred['password']])) {
+            return 'OK';
+        } else {
+            return response()->unauthenticated();
+        }
     }
 }

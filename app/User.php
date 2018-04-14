@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getPilotIDAttribute() {
+        return $this->pilotID();
+    }
+
     /**
      * @param bool $zeropad
      * @return string
