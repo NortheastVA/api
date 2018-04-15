@@ -27,7 +27,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getpilotIDAttribute() {
+    protected $appends = ['PilotID'];
+
+    public function getPilotIDAttribute() {
         return $this->pilotID();
     }
 

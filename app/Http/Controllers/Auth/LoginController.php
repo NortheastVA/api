@@ -45,7 +45,8 @@ class LoginController extends Controller
         $cred = $request->only("username","password");
         if (\Auth::attempt(['email' => $cred['username'], 'password' => $cred['password']])) {
             return 'OK';
-        } elseif (\Auth::attempt(['pilotID' => $cred['username'], 'password' => $cred['password']])) {
+        } elseif (\Auth::attempt(['pilotnumber' => str_replace(env('AIRLINE_CODE', 'ZZZ'), '', $cred['username']),
+            'password' => $cred['password']])) {
             return 'OK';
         } else {
             return response()->unauthenticated();

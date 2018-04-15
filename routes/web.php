@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/login','Auth\LoginController@authenticate');
+Route::get('/test', function() {
+    echo json_encode(\App\User::get()->toArray());
+});
