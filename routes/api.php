@@ -14,3 +14,6 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/auth/login', 'AuthController@getLogin');
+Route::get('/auth/logout', 'AuthController@getLogout');
+Route::get('/auth/jwt/renew', 'AuthController@getRenew');
+Route::get('/auth/jwt/refresh', 'AuthController@getRefresh');

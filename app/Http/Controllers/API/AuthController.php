@@ -3,8 +3,14 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Auth;   // Facade
+
 class AuthController extends APIController
 {
+    public function __construct() {
+        $this->middleware('jwt.renew')->only('getRenew');
+        $this->middleware('jwt.refresh')->only('getRefresh');
+    }
+
     public function getLogin(Request $request) {
         $ok = false;
         $cred = $request->only("username","password");
@@ -32,4 +38,19 @@ class AuthController extends APIController
             return response()->unauthenticated();
         }
     }
+
+    public function getLogout() {
+        // Check if using JWT
+        if (\Auth::guard('jwt')->user()) {
+            \Auth::guard('jwt')->logout();
+        }
+        // Check cookies
+        if (\Auth::guard("web")->user()) {
+            \Auth::guard("web")->logout();
+        }
+        return response()->ok();
+    }
+
+    public function getRefresh() { return response()->ok(); }
+    public function getRenew() { return response()->ok(); }
 }

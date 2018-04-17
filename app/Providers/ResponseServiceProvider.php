@@ -27,7 +27,7 @@ class ResponseServiceProvider extends ServiceProvider
             return response()->api(array_merge(['status' => 'OK'], $data), 200);
         });
         $factory->macro('api', function ($data, $status = 200, $headers = []) use ($factory) {
-            return $factory->make(encode_json($data), $status, array_merge($headers, ['Content-Type' => 'application/json']));
+            return $factory->make(json_encode($data, JSON_NUMERIC_CHECK), $status, array_merge($headers, ['Content-Type' => 'application/json']));
         });
     }
 
