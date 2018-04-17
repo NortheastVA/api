@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $namespaceapi = 'App\Http\Controllers\API';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -51,9 +52,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+        if (env('APP_ENV') == "dev") {
+            Route::domain("www.northeastva.devel")
+                ->middleware(["web"])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+        } else {
+            Route::domain("www.northeastva.org")
+                ->middleware(["web"])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+        }
     }
 
     /**
@@ -65,9 +74,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        if (env('APP_ENV') == "dev") {
+            Route::domain("api.northeastva.devel")
+                ->middleware(["web","api"])
+                ->namespace($this->namespaceapi)
+                ->group(base_path('routes/api.php'));
+        } else {
+            Route::domain("api.northeastva.org")
+                ->middleware(["web","api"])
+                ->namespace($this->namespaceapi)
+                ->group(base_path('routes/api.php'));
+        }
     }
 }
