@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/auth/login', 'AuthController@getLogin');
+Route::get('/auth/logout', 'AuthController@getLogout');
+Route::get('/auth/jwt/renew', 'AuthController@getRenew');
+Route::get('/auth/jwt/refresh', 'AuthController@getRefresh');
