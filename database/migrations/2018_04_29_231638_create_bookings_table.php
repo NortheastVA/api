@@ -16,7 +16,7 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("route_id");
-            $table->enum("online", ["VATSIM", "IVAO", "Offline"]);
+            $table->enum("online", ["VATSIM", "IVAO", "POSCON", "Other", "Offline"]);
             $table->mediumText("route");
             $table->date("departureDate");
             $table->time("departureTime");
@@ -24,7 +24,7 @@ class CreateBookingsTable extends Migration
         });
 
         Schema::table("bookings", function (Blueprint $table) {
-            $table->foreign("route")
+            $table->foreign("route_id")
                 ->references("id")->on("routes")
                 ->onDelete("cascade")
                 ->onUpdate("cascade");
