@@ -12,9 +12,9 @@ return [
     */
    
     'supportsCredentials' => false,
-    'allowedOrigins' => ['*.northeastva.devel','*.northeastva.org'],
+    'allowedOrigins' => ['*.northeastva.devel','*.northeastva.org', '*.northeastva.devel:4000'],
     'allowedOriginsPatterns' => [],
-    'allowedHeaders' => ['Content-Type','X-Requested-With','X-Forwarded-For'],
+    'allowedHeaders' => ['*'],
     'allowedMethods' => ['GET','POST','PUT','DELETE'],
     'exposedHeaders' => [],
     'maxAge' => 0,
