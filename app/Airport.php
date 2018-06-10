@@ -47,4 +47,13 @@ class Airport extends BaseModel
 
         return round($angle * 3440, 1);
     }
+
+    // When running find, make sure we capitalize the identifier.
+    public function __call($method, $parameters) {
+        if ($method == "find") {
+            $parameters[0] = strtoupper($parameters[0]);
+        }
+
+        return parent::__call($method, $parameters);
+    }
 }
