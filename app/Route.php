@@ -11,14 +11,14 @@ class Route extends BaseModel
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function departureAirport() {
-        return $this->hasOne("App/Airport", "id", "departure");
+        return $this->hasOne("App\Airport", "id", "departure");
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function arrivalAirport() {
-        return $this->hasOne("App/Airport", "id", "arrival");
+        return $this->hasOne("App\Airport", "id", "arrival");
     }
 
     /**
