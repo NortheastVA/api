@@ -11,6 +11,10 @@ class Airport extends BaseModel
      */
     public $incrementing = false;
 
+    public static function byIcao($icao) {
+        return Airport::find(strtoupper($icao));
+    }
+
     /**
      * Calculates great circle distance between two airports using the Vincenty formula.
      *
