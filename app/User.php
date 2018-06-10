@@ -54,6 +54,17 @@ class User extends BaseModel implements
             return sprintf("%s%d", env('AIRLINE_CODE', 'ZZZ'), $this->pilotnumber);
     }
 
+    public function hasRole($role) {
+        if (is_array($role)) {
+            return null !== $this->roles()->whereIn('role', $role)->first();
+        }
+        return null !== $this->roles()->where('role', $role)->first();
+    }
+
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function getJWTIdentifier() {
         return $this->getKey();
     }
