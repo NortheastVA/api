@@ -9,11 +9,18 @@ use App\Route;
 use Illuminate\Http\Request;
 use Validator;
 
-class DataController extends APIController
+class DispatchController extends APIController
 {
-    public function getBooking(Request $request, $id) {
-        $booking = Booking::find($id);
-        if (!$booking) return response()->notfound();
+    public function getBooking(Request $request, $id = null) {
+        if ($id == null) {
+            $booking = Booking::where("user_id", \Auth::user()->id)->get()->toArray();
+        } else {
+            $booking = Booking::find($id);
+            if ($booking->user_id != \Auth::user()->id && !RoleHelper::roleForAction("HR")) {
+                return response()->forbidden();
+            }
+            if (!$booking) return response()->notfound();
+        }
 
         return response()->ok(['data' => $booking]);
     }
