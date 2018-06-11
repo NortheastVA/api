@@ -22,7 +22,7 @@ class CreateRoutesTable extends Migration
             $table->string("callsign", 7);
             $table->string("departure", 4);
             $table->string("arrival", 4);
-            $table->string("daySequence")->comment("Format: SuMoTuWeThFrSa, any order only on active days");
+            $table->string("daySequence")->comment("Format: 1234567 (1 Mon, 2 Tue, 3 Wed, 4 Thu, 5 Fri, 6 Sat, 7 Sun");
             $table->time("departureTime");
             $table->time("timeEnroute");
             $table->integer("cruise");
