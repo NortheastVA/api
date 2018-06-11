@@ -43,6 +43,10 @@ class User extends BaseModel implements
         return $this->pilotID();
     }
 
+    public function getFullnameAttribute() {
+        return $this->firstname . " " . $this->lastname;
+    }
+
     /**
      * @param bool $zeropad
      * @return string

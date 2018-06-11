@@ -16,6 +16,9 @@ class RoleHelper {
             case 'route':
                 return 'OPS';
                 break;
+            case 'HR':
+                return 'HR';
+                break;
             default:
                 return null;
         }

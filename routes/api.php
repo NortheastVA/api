@@ -38,5 +38,7 @@ Route::middleware(["auth:web,jwt"])->prefix("/data")->group(function() {
 });
 
 Route::group(['prefix' => '/dispatch', 'middleware' => 'auth:web,jwt'], function() {
-    Route::get('bookings/{id?}', 'DispatchController@getBook');
+    Route::get('bookings/{id?}', 'DispatchController@getBooking');
+    Route::post("bookings", "DispatchController@postBooking");
+    Route::delete("bookings/{id}", "DispatchController@deleteBooking");
 });
