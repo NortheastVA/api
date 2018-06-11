@@ -66,7 +66,7 @@ class User extends BaseModel implements
     }
 
     public function roles() {
-        return $this->belongsToMany(Role::class);
+        return $this->hasMany('App\Role', 'user_id', 'id');
     }
 
     public function log($data) {
@@ -81,6 +81,8 @@ class User extends BaseModel implements
     }
 
     public function getJWTCustomClaims() {
-        return [];
+        return [
+            'user' => $this->load('roles')->toArray()
+        ];
     }
 }
