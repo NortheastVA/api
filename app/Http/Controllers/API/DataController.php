@@ -18,6 +18,8 @@ class DataController extends APIController
         if ($id != null) {
             $route = Route::find($id);
             if (!$route) return response()->notfound();
+            // Eager load the relationships so we can access the data proper
+            $route->load('departureAirport', 'arrivalAirport');
             return response()->ok(['data' => [$route]]);
         }
 
