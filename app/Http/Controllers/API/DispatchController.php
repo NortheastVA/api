@@ -13,9 +13,11 @@ class DispatchController extends APIController
 {
     public function getBooking(Request $request, $id = null) {
         if ($id == null) {
-            $booking = Booking::where("user_id", \Auth::user()->id)->get()->toArray();
+            $booking = Booking::with(['routeInfo','routeInfo.departureAirport','routeInfo.arrivalAirport'])
+                ->where("user_id", \Auth::user()->id)->get()->toArray();
         } else {
-            $booking = Booking::find($id);
+            $booking = Booking::with(['routeInfo', 'routeInfo.departureAirport', 'routeInfo.arrivalAirport'])
+                ->find($id);
             if ($booking->user_id != \Auth::user()->id && !RoleHelper::roleForAction("HR")) {
                 return response()->forbidden();
             }
