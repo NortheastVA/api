@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Helpers\RoleHelper;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,23 @@ Route::get('/auth/jwt/refresh', 'AuthController@getRefresh');
 Route::middleware(["auth:web,jwt"])->prefix("/data")->group(function() {
     Route::get('/airport/{icao}','DataController@getAirport');
     Route::get('/route/{id?}','DataController@getRoute');
+
+    Route::prefix("/airport")
+        ->middleware(['role:' . RoleHelper::roleForAction("airport")])
+        ->group(function() {
+            Route::post("{icao}", "DataController@postAirport");
+            Route::delete("{icao}", "DataController@deleteAirport");
+    });
+    Route::prefix("/route")
+        ->middleware(["role:" . RoleHelper::roleForAction("route")])
+        ->group(function() {
+            Route::post("{id?}", "DataController@postRoute");
+            Route::delete("{id}", "DataController@deleteRoute");
+    });
+});
+
+Route::group(['prefix' => '/dispatch', 'middleware' => 'auth:web,jwt'], function() {
+    Route::get('bookings/{id?}', 'DispatchController@getBooking');
+    Route::post("bookings", "DispatchController@postBooking");
+    Route::delete("bookings/{id}", "DispatchController@deleteBooking");
 });

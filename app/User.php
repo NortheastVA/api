@@ -43,6 +43,10 @@ class User extends BaseModel implements
         return $this->pilotID();
     }
 
+    public function getFullnameAttribute() {
+        return $this->firstname . " " . $this->lastname;
+    }
+
     /**
      * @param bool $zeropad
      * @return string
@@ -63,6 +67,13 @@ class User extends BaseModel implements
 
     public function roles() {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function log($data) {
+        $log = new ActionLog();
+        $log->user_id = $this->id;
+        $log->data = $data;
+        $log->save();
     }
 
     public function getJWTIdentifier() {
