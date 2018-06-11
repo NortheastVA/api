@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\ActionLog;
 use App\Airport;
 use App\Route;
 use Illuminate\Http\Request;
@@ -31,12 +32,16 @@ class DataController extends APIController
         $airport->lon = $request->input("lon", $airport->lon);
         $airport->save();
 
+        \Auth::user()->log("POST airport $icao, data " . json_encode($request->all()));
+
         return response()->ok();
     }
 
     public function deleteAirport(Request $request, $icao) {
         $airport = Airport::find($icao);
         if (!$airport) return response()->notfound();
+
+        \Auth::user()->log("DELETE airport $icao");
 
         // Remove routes departing from or arriving to this destination
         Route::where("departure", $icao)->orWhere("arrival", $icao)->delete();
@@ -135,6 +140,8 @@ class DataController extends APIController
         $route->remarks = $request->input("remarks");
         $route->save();
 
+        \Auth::user()->log("POST route $id, data " . json_encode($request->all()));
+
         return response()->ok();
     }
 
@@ -143,6 +150,8 @@ class DataController extends APIController
         if (!$route) return response()->notfound();
 
         $route->delete();
+
+        \Auth::user()->log("DELETE route $id");
 
         return response()->ok();
     }

@@ -65,6 +65,13 @@ class User extends BaseModel implements
         return $this->belongsToMany(Role::class);
     }
 
+    public function log($data) {
+        $log = new ActionLog();
+        $log->user_id = $this->id;
+        $log->data = $data;
+        $log->save();
+    }
+
     public function getJWTIdentifier() {
         return $this->getKey();
     }
