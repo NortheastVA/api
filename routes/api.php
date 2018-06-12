@@ -42,3 +42,8 @@ Route::group(['prefix' => '/dispatch', 'middleware' => 'auth:web,jwt'], function
     Route::post("bookings", "DispatchController@postBooking");
     Route::delete("bookings/{id}", "DispatchController@deleteBooking");
 });
+
+Route::group(['prefix' => '/acars', 'middleware' => 'auth:web,jwt'], function () {
+    Route::get('/', 'ACARSController@get');
+    Route::post('/', 'ACARSController@post');
+});

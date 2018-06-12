@@ -69,6 +69,10 @@ class User extends BaseModel implements
         return $this->hasMany('App\Role', 'user_id', 'id');
     }
 
+    public function acars_queue() {
+        return $this->hasMany('App\ACARSMessageQueue', 'user_id', 'id');
+    }
+
     public function log($data) {
         $log = new ActionLog();
         $log->user_id = $this->id;

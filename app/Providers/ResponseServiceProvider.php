@@ -23,6 +23,9 @@ class ResponseServiceProvider extends ServiceProvider
         $factory->macro('unauthenticated', function ($data = []) use ($factory) {
             return response()->api(array_merge(generate_error("Unauthorized"), $data), 401);
         });
+        $factory->macro('custom', function($code, $msg, $data = []) use ($factory) {
+            return response()->api(array_merge(generate_error($msg), $data), $code);
+        });
         $factory->macro('ok', function ($data = []) use ($factory) {
             return response()->api(array_merge(['status' => 'OK'], $data), 200);
         });
