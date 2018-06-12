@@ -14,9 +14,11 @@ class ACARSController extends APIController
     public function get(Request $request) {
         $return = [];
 
-        $logs = \Auth::user()->acars_queue;
+        $logs = \Auth::user()->acars_queue()->where("sent",false)->get();
         foreach ($logs as $log) {
             $return[] = $log;
+            $log->sent = true;
+            $log->save();
         }
 
         return response()->ok(['data' => $return]);
