@@ -51,6 +51,6 @@ class AuthController extends APIController
         return response()->ok();
     }
 
-    public function getRefresh() { return response()->ok(['token' => \Auth::guard('jwt')->token ]); }
+    public function getRefresh() { return response()->ok(['token' => \Auth::guard('jwt')->getToken() ]); }
     public function getRenew() { return response()->ok(['token' => \Auth::guard('jwt')->getToken() ]); }
 }
