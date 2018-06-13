@@ -9,9 +9,17 @@ use Validator;
 
 class DataController extends APIController
 {
-    public function getAirport(Request $request, $id) {
-        $airport = Airport::find($id);
-        if (!$airport) return response()->notfound();
+    public function getAirport(Request $request, $id = null) {
+        if ($id) {
+            $airport[] = Airport::find($id);
+            if (empty($airport)) return response()->notfound();
+        } else {
+            if ($request->has("filter")) {
+                $airport = Airport::where("id", "LIKE", $request->input("filter") . "%")->get();
+            } else {
+                $airport = Airport::all();
+            }
+        }
 
         return response()->ok(['data' => $airport]);
     }
