@@ -26,6 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::pattern('id','[0-9]+');
         Route::pattern('icao','[A-Za-z0-9]{3,4}');
+        Route::pattern('callsign', '[A-Z]{3}[0-9]{1,4}');
 
         parent::boot();
     }
