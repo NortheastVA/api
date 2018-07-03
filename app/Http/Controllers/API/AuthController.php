@@ -2,13 +2,15 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Auth;   // Facade
+use Auth;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;   // Facade
 
 class AuthController extends APIController
 {
     public function __construct() {
-        $this->middleware('jwt.renew')->only('getRenew');
-        $this->middleware('jwt.refresh')->only('getRefresh');
+        /*$this->middleware('jwt.renew')->only('getRenew');
+        $this->middleware('jwt.refresh')->only('getRefresh'); */
     }
 
     public function getLogin(Request $request) {
@@ -51,6 +53,17 @@ class AuthController extends APIController
         return response()->ok();
     }
 
-    public function getRefresh() { return response()->ok(['token' => \Auth::guard('jwt')->getToken() ]); }
-    public function getRenew() { return response()->ok(['token' => \Auth::guard('jwt')->getToken() ]); }
+    public function getRefresh() {
+        try {
+            $token = auth('jwt')->refresh();
+        } catch (TokenExpiredException $e) {
+            return response()->forbidden(['e' => 'expired']);
+        } catch (TokenBlacklistedException $e) {
+            return response()->forbidden(['e' => 'blacklisted']);
+        } catch (\Exception $e) {
+            return response()->servererror(['e' => $e->getMessage()]);
+        }
+
+        return;
+    }
 }
