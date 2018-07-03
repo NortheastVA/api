@@ -64,6 +64,6 @@ class AuthController extends APIController
             return response()->servererror(['e' => $e->getMessage()]);
         }
 
-        return;
+        return response()->ok(['token' => $token]);
     }
 }
